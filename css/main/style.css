@@ -1,0 +1,32 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: rgb(80, 80, 80);
+}
+
+.map_cache {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(106, 154, 255, 0.5);
+}
+
+#close {
+    user-select: none;
+    cursor: pointer;
+}
+
+.jvectormap-region {
+    stroke: white;
+    stroke-width: 0;
+}

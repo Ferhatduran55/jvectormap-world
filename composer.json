@@ -1,0 +1,9 @@
+{
+    "require": {
+        "workerman/workerman": "^4.0",
+        "workerman/phpsocket.io": "^1.1",
+        "phpmailer/phpmailer": "^6.6",
+        "vlucas/phpdotenv": "^5.4",
+        "twbs/bootstrap": "5.2.0"
+    }
+}
