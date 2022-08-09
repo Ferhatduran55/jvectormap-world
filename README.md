@@ -1,5 +1,33 @@
 # jVectorMap World Province
 
+## Features
+
+- [Hearts of Iron IV Map](https://github.com/Ferhatduran55/jvectormap-world/blob/master/map.png?raw=true)
+
+## APIs
+### Local APIs
+
+| API | Description |
+| - | - |
+| core | Parse and return data from global API for country details |
+| language | Return language |
+| port | Returns required connection information for socket connection |
+| time | Returns the current time |
+
+### Global APIs
+
+| API | Description |
+| - | - |
+| country | Returns country details corresponding to data sent to https://restcountries.com/v3.1/alpha |
+| translate | Returns the translated word based on data sent to https://portal.ayfie.com/api/translate |
+
+## Components
+
+- php`@7.4.26`
+- node`@16.16.0`
+- npm`@8.11.0`
+- composer`@2.3.10`
+
 ## Node Modules
 
 - dotenv`@16.0.1`
@@ -28,48 +56,60 @@
 - bootstrap`@5.2.0`
 - jvectormap`@2.0.5`
 - requirejs`@2.3.6`
-- _main_`@latest`
+- _main`@latest`_
 
 ## Environment Variables
-### LOCAL OPTIONS
+### Local Variables
 
-HOSTNAME = "localhost"
-IP = "127.0.0.1"
+| Variable | Value |
+| - | - |
+| HOSTNAME | "localhost" |
+| IP | "127.0.0.1" |
 
-### WORKERMAN OPTIONS
+### Workerman Variables
 
-### WORKERMAN PORT OPTIONS
+### Workerman Port Variables
 
-WKM_HTTPS_PORT = 3002
-WKM_HTTP_PORT = 3003
+| Variable | Value |
+| - | - |
+| WKM_HTTPS_PORT | 3002 |
+| WKM_HTTP_PORT | 3003 |
 
-### IO OPTIONS
+### IO Variables
 
-IO_PING_INTERVAL = 3000
-IO_PING_TIMEOUT = 5000
-IO_CONNECT_TIMEOUT = 45000
-IO_ALLOW_UPGRADES = true
-IO_UPGRADE_TIMEOUT = 10000
-IO_MAX_HTTP_BUFFER_SIZE = 1000000
-IO_HTTP_COMPRESSION = true
+| Variable | Value |
+| - | - |
+| IO_PING_INTERVAL | 3000 |
+| IO_PING_TIMEOUT | 5000 |
+| IO_CONNECT_TIMEOUT | 45000 |
+| IO_ALLOW_UPGRADES | true |
+| IO_UPGRADE_TIMEOUT | 10000 |
+| IO_MAX_HTTP_BUFFER_SIZE | 1000000 |
+| IO_HTTP_COMPRESSION | true |
 
-### IO CORS OPTIONS
+### IO Cors Variables
 
-IO_CORS_ORIGIN = "*"
-IO_CORS_ALLOWED_HEADERS = ["access"]
-IO_CORS_CREDENTIALS = true
+| Variable | Value |
+| - | - |
+| IO_CORS_ORIGIN | "*" |
+| IO_CORS_ALLOWED_HEADERS | ["access"] |
+| IO_CORS_CREDENTIALS | true |
 
-### PROTOCOL OPTIONS
+### Protocol Variables
 
-### 1 -> HTTPS_PORT
-### 2 -> HTTP_PORT
-PROTOCOL = 2 
+| Variable | Value |
+| - | - |
+| PROTOCOL | 2 |
 
-### IO PORT OPTIONS
+### IO Port Variables
 
-IO_HTTPS_PORT = 3000
-IO_HTTP_PORT = 3001
+| Variable | Value |
+| - | - |
+| IO_HTTPS_PORT | 3000 |
+| IO_HTTP_PORT | 3001 |
 
-### API OPTIONS
+### API Variables
 
-X_API_KEY = "bKDUjcnKWnEgwoICmjxrQsMNLsXbPQekrxiNSueQnBnFQUsQkn"
+| Variable | Value |
+| - | - |
+| X_API_KEY | "bKDUjcnKWnEgwoICmjxrQsMNLsXbPQekrxiNSueQnBnFQUsQkn"
