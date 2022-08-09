@@ -123,7 +123,8 @@ io.on("connection", (socket) => {
             var list = {
                 id: socket.handshake.query.id,
                 date: socket.handshake.query.date,
-                from: socket.handshake.query.from
+                from: socket.handshake.query.from,
+                color: '#' + Math.floor(Math.random() * 16777215).toString(16)
             }
             userTable.push(list);
             user = userTable.find(session => session.id === authId);
@@ -131,11 +132,18 @@ io.on("connection", (socket) => {
             console.log(colorize('Bağlantı kuruldu -> ', "cyan") + user.id + " -> " + user.date);
             socket.emit('log', 'Bağlantı kuruldu -> ' + user.id);
         }
+        socket.on('request-color', function (id) {
+            if (id === user.id) {
+                if (() => user.color){
+                    socket.emit('get-color',user.color);
+                }
+            }
+        });
         socket.on('country-select', (country) => {
-            io.emit('light-country', country);
+            io.emit('light-country', country, user.color);
         });
         socket.on('disconnect', (reason) => {
-            console.log(colorize('Bağlantı sonlandırıldı -> ', "yellow") + user.id + colorize(' -> ',"yellow")  + colorize(reason,"BgRed"));
+            console.log(colorize('Bağlantı sonlandırıldı -> ', "yellow") + user.id + colorize(' -> ', "yellow") + colorize(reason, "BgRed"));
         });
     } else {
         console.log(colorize("Authentication rejected.", "red"));
