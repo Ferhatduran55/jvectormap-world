@@ -23,10 +23,11 @@
 
 ## Components
 
+- apache`@2.4.51`
 - php`@7.4.26`
+- composer`@2.3.10`
 - node`@16.16.0`
 - npm`@8.11.0`
-- composer`@2.3.10`
 
 ## Node Modules
 
