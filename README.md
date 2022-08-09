@@ -1,4 +1,4 @@
-### jVectorMap World Province
+# jVectorMap World Province
 
 ## Node Modules
 
@@ -13,6 +13,7 @@
 
 ## Php Modules
 
+- bootstrap`@5.2.0`
 - graham-campbell/result-type`@1.1.0`
 - phpmailer/phpmailer`@6.6.3`
 - symfony/polyfill-ctype`@1.26.0`
@@ -22,3 +23,10 @@
 - workerman/channel`@1.1.0`
 - workerman/phpsocket.io`@1.1.14`
 - workerman/workerman`@4.0.42`
+
+## Assets
+
+- bootstrap`@5.2.0`
+- jvectormap`@2.0.5`
+- requirejs`@2.3.6`
+- _main_`@latest`
