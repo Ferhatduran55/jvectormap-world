@@ -125,8 +125,10 @@ io.on("connection", (socket) => {
                 socket.join(user.room);
                 var addRoomSocket = room.find(room => room.id === user.room);
                 addRoomSocket.sockets.push(user.id);
-                io.to(user.room).emit('room-connected',addRoomSocket.sockets);
+                io.to(user.room).emit('room-connected', addRoomSocket.sockets);
                 console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
+                var socketRoom = room.find(room => room.id === user.room);
+                io.to(user.room).emit('light-country', socketRoom.colors);
             }
         } else {
             var list = {
@@ -152,16 +154,20 @@ io.on("connection", (socket) => {
                     socket.join(user.room);
                     var addRoomSocket = room.find(room => room.id === user.room);
                     addRoomSocket.sockets.push(user.id);
-                    io.to(user.room).emit('room-connected',addRoomSocket.sockets);
+                    io.to(user.room).emit('room-connected', addRoomSocket.sockets);
                     console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
+                    var socketRoom = room.find(room => room.id === user.room);
+                    socket.to(user.room).emit('light-country', socketRoom.colors);
                 } else {
                     room.push(roomTemplate);
                     if (room.find(room => room.id === user.room)) {
                         socket.join(user.room);
                         var addRoomSocket = room.find(room => room.id === user.room);
                         addRoomSocket.sockets.push(user.id);
-                        io.to(user.room).emit('room-connected',addRoomSocket.sockets);
+                        io.to(user.room).emit('room-connected', addRoomSocket.sockets);
                         console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
+                        var socketRoom = room.find(room => room.id === user.room);
+                        io.to(user.room).emit('light-country', socketRoom.colors);
                     }
                 }
             }
@@ -177,22 +183,24 @@ io.on("connection", (socket) => {
         });
         socket.on('country-select', (country) => {
             var socketRoom = room.find(room => room.id === user.room);
-            if(socketRoom.colors.find(Country => Country.code === country)){
-                socketRoom.colors.find(Country => Country.code === country).color = user.color;
-            }else{
-                socketRoom.colors.push({
-                    code: country,
-                    color: user.color
-                });
+            if (() => country) {
+                if (socketRoom.colors.find(Country => Country.code === country)) {
+                    socketRoom.colors.find(Country => Country.code === country).color = user.color;
+                } else {
+                    socketRoom.colors.push({
+                        code: country,
+                        color: user.color
+                    });
+                }
+                io.to(user.room).emit('light-country', socketRoom.colors);
             }
-            io.to(user.room).emit('light-country', socketRoom.colors);
         });
         socket.on('disconnect', (reason) => {
             var currentRoom = room.find(room => room.id === user.room);
-            if(currentRoom.sockets.indexOf(user.id) > -1){
-                currentRoom.sockets.splice(currentRoom.sockets.indexOf(user.id),1);
+            if (currentRoom.sockets.indexOf(user.id) > -1) {
+                currentRoom.sockets.splice(currentRoom.sockets.indexOf(user.id), 1);
             }
-            io.to(user.room).emit('room-connected',currentRoom.sockets);
+            io.to(user.room).emit('room-connected', currentRoom.sockets);
             console.log(colorize('Bağlantı sonlandırıldı -> ', "yellow") + user.id + colorize(' -> ', "yellow") + colorize(reason, "BgRed"));
         });
     } else {

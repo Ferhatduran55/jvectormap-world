@@ -47,6 +47,7 @@ body {
     fill: white;
     background-color: #212529;
     border-radius: 5px;
+    transform: translateX(-60%);
     margin: 0 auto;
     padding: 6.5px;
     transition: all 500ms;
@@ -62,10 +63,67 @@ body {
 
 .socket:hover {
     width: fit-content;
-    transform: scale(1.1);
+    transform: scale(1.1) translateX(-60%);
 }
 
 .socket:hover>.socket-size {
+    display: inline-block;
+    width: fit-content;
+    margin:0px 5px;
+    text-align: center;
+    font-size: 2vh;
+}
+
+.tools {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    display: flex;
+    position: absolute;
+    top: 5px;
+    left: 0px;
+    right: 0px;
+    z-index: 32;
+    width: fit-content;
+    height: fit-content;
+    fill: white;
+    background-color: #212529;
+    border-radius: 5px;
+    transform: translateX(60%);
+    margin: 0 auto;
+    padding: 5.0px 2px;
+    transition: all 500ms;
+}
+.tools .tools-leave-before {
+    display: inline-block;
+    width: fit-content;
+    margin:0px 5px;
+    text-align: center;
+    font-size: 2vh;
+}
+.tools .tools-leave-after {
+    display: none;
+    width: 0px;
+    color: White;
+    transition: all 250ms;
+    font-size: 1vh;
+}
+
+.tools:hover {
+    width: fit-content;
+    transform: scale(1.1) translateX(60%);
+}
+
+.tools:hover> .tools-leave-before {
+    display: none;
+    width: 0px;
+    color: White;
+    transition: all 250ms;
+    font-size: 1vh;
+}
+
+.tools:hover>.tools-leave-after {
     display: inline-block;
     width: fit-content;
     margin:0px 5px;
