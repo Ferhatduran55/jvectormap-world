@@ -121,8 +121,10 @@ io.on("connection", (socket) => {
             user = userTable.find(session => session.id === authId);
             console.log(colorize('Tekrar bağlandı -> ', "cyan") + user.id);
             socket.emit('log', 'Tekrar bağlandı -> ' + user.id);
-            if (room.find(room => room === user.room)) {
-                socket.join(user.room)
+            if (room.find(room => room.id === user.room)) {
+                socket.join(user.room);
+                var addRoomSocket = room.find(room => room.id === user.room);
+                addRoomSocket.sockets.push(user.id);
                 console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
             }
         } else {
@@ -140,11 +142,26 @@ io.on("connection", (socket) => {
             console.log(colorize("Authentication accepted.", "green"));
             console.log(colorize('Bağlantı kuruldu -> ', "cyan") + user.id + " -> " + user.date);
             if (() => user.room) {
-                room.push(user.room);
-                if (room.find(room => room === user.room)) {
-                    socket.join(user.room)
-                    console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
+                var roomTemplate = {
+                    id: user.room,
+                    sockets: [],
+                    colors: []
                 }
+                if (room.find(room => room.id === user.room)) {
+                    socket.join(user.room);
+                    var addRoomSocket = room.find(room => room.id === user.room);
+                    addRoomSocket.sockets.push(user.id);
+                    console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
+                } else {
+                    room.push(roomTemplate);
+                    if (room.find(room => room.id === user.room)) {
+                        socket.join(user.room);
+                        var addRoomSocket = room.find(room => room.id === user.room);
+                        addRoomSocket.sockets.push(user.id);
+                        console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
+                    }
+                }
+                console.log(room);
             }
             socket.emit('log', 'Bağlantı kuruldu -> ' + user.id);
         }
@@ -156,7 +173,16 @@ io.on("connection", (socket) => {
             }
         });
         socket.on('country-select', (country) => {
-            io.emit('light-country', country, user.color);
+            var socketRoom = room.find(room => room.id === user.room);
+            if(socketRoom.colors.find(Country => Country.code === country)){
+                socketRoom.colors.find(Country => Country.code === country).color = user.color;
+            }else{
+                socketRoom.colors.push({
+                    code: country,
+                    color: user.color
+                });
+            }
+            io.to(user.room).emit('light-country', socketRoom.colors);
         });
         socket.on('disconnect', (reason) => {
             console.log(colorize('Bağlantı sonlandırıldı -> ', "yellow") + user.id + colorize(' -> ', "yellow") + colorize(reason, "BgRed"));

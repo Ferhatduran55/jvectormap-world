@@ -49,7 +49,6 @@ $(function () {
         $(".infoBoxResizeTool").on("mousedown", function () {
             $("#info").addClass("Resize");
             $("body").addClass("UnSelectable");
-            console.log("sasa");
             KeyDown = 1;
         });
         $(document).on("mouseup", function () {
@@ -107,20 +106,16 @@ $(function () {
     $("body").on("click", "#close", function () {
         $("#info").css("top", "100%");
     });
-    $("body").on("mouseenter", "path", function (e) {
+    $("#map").on("mouseenter", "path", function (e) {
         e.preventDefault();
-        var pathColor;
         var country = $(this).data("code");
         $("path[data-code='" + country + "']").on("click", function () {
-            pathColor = oldColor;//$("path[data-code='" + country + "']").attr("fill");
-            console.log(pathColor);
-            console.log(country);
             pathAjax(country);
         });
         $("path[data-code='" + country + "']").on("mouseleave", function () {
             $("path[data-code='" + country + "']").off("click");
             setTimeout(function () {
-                $("path[data-code='" + country + "']").attr("fill", pathColor);
+                $("path[data-code='" + country + "']").attr("fill", colors.find(Country => Country.code === country).color);
             }, 10);
         });
     });

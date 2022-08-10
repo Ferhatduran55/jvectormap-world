@@ -1,7 +1,9 @@
 <?php
 $page_title = "World Map";
-if(!isset($_SESSION['room'])){
+if(!isset($_SESSION['room']) && !isset($_GET['room'])){
     $_SESSION['room'] = random_int(100000, 999999);
+}else if(isset($_GET['room'])  && $_GET['room'] >= 100000 && $_GET['room'] <= 999999){
+    $_SESSION['room'] = $_GET['room'];
 }
 ?>
 <div id="map" class="map_cache"></div>
@@ -10,6 +12,7 @@ if(!isset($_SESSION['room'])){
 <script data-group="socketio" id="latest" src="node_modules/socket.io/client-dist/socket.io.js"></script>
 <script data-group="socketio">
     var oldColor;
+    var colors = [];
     $(document).ready(function() {
         var scriptSrc = {
             old: "node_modules/socket.io-client/dist/socket.io.js",
@@ -62,11 +65,19 @@ if(!isset($_SESSION['room'])){
                 var country = $(this).data("code");
                 socket.emit('country-select', country);
             });
-            socket.on('light-country', function(country, color) {
-                $("path[data-code='" + country + "']").attr("fill", color);
+            socket.on('light-country', function(data) {
+                data.forEach(element => {
+                    if(colors.find(country => country.code === element.code)){
+                        colors.find(country => country.code === element.code).color = element.color;
+                    }else{
+                        colors.push({code:element.code,color:element.color});
+                    }
+                    $("path[data-code='" + element.code + "']").attr("fill", element.color);
+                });
             });
             const newColor = oldColor;
             $("script[data-group='socketio']").remove();
         });
+        console.log(map.regions);
     });
 </script>
