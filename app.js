@@ -65,6 +65,12 @@ function getEnv(properties, isInt = false) {
     });
     return output;
 }
+function arrayRemove(arr, value) { 
+    
+    return arr.filter(function(ele){ 
+        return ele != value; 
+    });
+}
 const env = {
     HOSTNAME: getEnv('HOSTNAME'),
     IP: getEnv('IP'),
@@ -124,7 +130,8 @@ io.on("connection", (socket) => {
             if (room.find(room => room.id === user.room)) {
                 socket.join(user.room);
                 var addRoomSocket = room.find(room => room.id === user.room);
-                addRoomSocket.sockets.push(user.id);
+                //addRoomSocket.sockets.push(user.id);
+                io.to(user.room).emit('room-connected',addRoomSocket.sockets);
                 console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
             }
         } else {
@@ -151,6 +158,7 @@ io.on("connection", (socket) => {
                     socket.join(user.room);
                     var addRoomSocket = room.find(room => room.id === user.room);
                     addRoomSocket.sockets.push(user.id);
+                    io.to(user.room).emit('room-connected',addRoomSocket.sockets);
                     console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
                 } else {
                     room.push(roomTemplate);
@@ -158,13 +166,14 @@ io.on("connection", (socket) => {
                         socket.join(user.room);
                         var addRoomSocket = room.find(room => room.id === user.room);
                         addRoomSocket.sockets.push(user.id);
+                        io.to(user.room).emit('room-connected',addRoomSocket.sockets);
                         console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
                     }
                 }
-                console.log(room);
             }
             socket.emit('log', 'Bağlantı kuruldu -> ' + user.id);
         }
+        console.log(room);
         socket.on('request-color', function (id) {
             if (id === user.id) {
                 if (() => user.color) {
@@ -185,6 +194,9 @@ io.on("connection", (socket) => {
             io.to(user.room).emit('light-country', socketRoom.colors);
         });
         socket.on('disconnect', (reason) => {
+            var currentRoom = room.find(room => room.id === user.room);
+            arrayRemove(currentRoom.sockets,user.id);
+            io.to(user.room).emit('room-connected',addRoomSocket.sockets);
             console.log(colorize('Bağlantı sonlandırıldı -> ', "yellow") + user.id + colorize(' -> ', "yellow") + colorize(reason, "BgRed"));
         });
     } else {

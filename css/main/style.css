@@ -31,6 +31,48 @@ body {
     stroke-width: 0;
 }
 
+.socket {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    display: flex;
+    position: absolute;
+    top: 5px;
+    left: 0px;
+    right: 0px;
+    z-index: 32;
+    width: fit-content;
+    height: fit-content;
+    fill: white;
+    background-color: #212529;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 6.5px;
+    transition: all 500ms;
+}
+
+.socket .socket-size {
+    display: none;
+    width: 0px;
+    color: White;
+    transition: all 250ms;
+    font-size: 1vh;
+}
+
+.socket:hover {
+    width: fit-content;
+    transform: scale(1.1);
+}
+
+.socket:hover>.socket-size {
+    display: inline-block;
+    width: fit-content;
+    margin:0px 5px;
+    text-align: center;
+    font-size: 2vh;
+}
+
 .github {
     user-select: none;
     -webkit-user-select: none;
@@ -86,12 +128,14 @@ body {
     border-top-right-radius: 5px;
     transition: all 175ms;
 }
+
 .UnSelectable {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-  }
+}
+
 .infoBoxResizeTool:hover {
     cursor: n-resize;
     line-height: 7px;
