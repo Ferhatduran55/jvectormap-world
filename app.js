@@ -5,6 +5,7 @@ const { Server } = require("socket.io");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const dotenv = require('dotenv').config();
 const isset = require('isset-php');
+const { Socket } = require("socket.io-client");
 const Colors = {
     Reset: "\x1b[0m",
     Bright: "\x1b[1m",
@@ -109,6 +110,7 @@ const io = new Server(httpServer, {
     }
 });
 
+var room = [];
 var userTable = [];
 
 io.on("connection", (socket) => {
@@ -119,6 +121,10 @@ io.on("connection", (socket) => {
             user = userTable.find(session => session.id === authId);
             console.log(colorize('Tekrar bağlandı -> ', "cyan") + user.id);
             socket.emit('log', 'Tekrar bağlandı -> ' + user.id);
+            if (room.find(room => room === user.room)) {
+                socket.join(user.room)
+                console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
+            }
         } else {
             var list = {
                 id: socket.handshake.query.id,
@@ -126,16 +132,26 @@ io.on("connection", (socket) => {
                 from: socket.handshake.query.from,
                 color: '#' + Math.floor(Math.random() * 16777215).toString(16)
             }
+            if (() => socket.handshake.query.room) {
+                list.room = socket.handshake.query.room;
+            }
             userTable.push(list);
             user = userTable.find(session => session.id === authId);
             console.log(colorize("Authentication accepted.", "green"));
             console.log(colorize('Bağlantı kuruldu -> ', "cyan") + user.id + " -> " + user.date);
+            if (() => user.room) {
+                room.push(user.room);
+                if (room.find(room => room === user.room)) {
+                    socket.join(user.room)
+                    console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
+                }
+            }
             socket.emit('log', 'Bağlantı kuruldu -> ' + user.id);
         }
         socket.on('request-color', function (id) {
             if (id === user.id) {
-                if (() => user.color){
-                    socket.emit('get-color',user.color);
+                if (() => user.color) {
+                    socket.emit('get-color', user.color);
                 }
             }
         });

@@ -1,5 +1,8 @@
 <?php
 $page_title = "World Map";
+if(!isset($_SESSION['room'])){
+    $_SESSION['room'] = random_int(100000, 999999);
+}
 ?>
 <div id="map" class="map_cache"></div>
 <script src="js/jvectormap/setting.js"></script>
@@ -37,7 +40,8 @@ $page_title = "World Map";
                 id: IO.id,
                 date: IO.date,
                 from: IO.from,
-                color: null
+                color: null,
+                room: <?= $_SESSION['room'] ?>
             }
             var socket = io(IO.url, {
                 query: IO.query
