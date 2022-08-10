@@ -59,7 +59,7 @@ function ajax(url, type, dataType, data, done = null) {
     });
 }
 var infoData = [];
-$(function(){
+$(function () {
     $("span.github").on("click", function () {
         window.open($(this).data("target"));
     });

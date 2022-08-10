@@ -65,12 +65,6 @@ function getEnv(properties, isInt = false) {
     });
     return output;
 }
-function arrayRemove(arr, value) { 
-    
-    return arr.filter(function(ele){ 
-        return ele != value; 
-    });
-}
 const env = {
     HOSTNAME: getEnv('HOSTNAME'),
     IP: getEnv('IP'),
@@ -130,7 +124,7 @@ io.on("connection", (socket) => {
             if (room.find(room => room.id === user.room)) {
                 socket.join(user.room);
                 var addRoomSocket = room.find(room => room.id === user.room);
-                //addRoomSocket.sockets.push(user.id);
+                addRoomSocket.sockets.push(user.id);
                 io.to(user.room).emit('room-connected',addRoomSocket.sockets);
                 console.log(colorize('Odaya bağlandı -> ', "cyan") + user.id + " -> " + colorize(user.room, "BgGreen"));
             }
@@ -195,8 +189,10 @@ io.on("connection", (socket) => {
         });
         socket.on('disconnect', (reason) => {
             var currentRoom = room.find(room => room.id === user.room);
-            arrayRemove(currentRoom.sockets,user.id);
-            io.to(user.room).emit('room-connected',addRoomSocket.sockets);
+            if(currentRoom.sockets.indexOf(user.id) > -1){
+                currentRoom.sockets.splice(currentRoom.sockets.indexOf(user.id),1);
+            }
+            io.to(user.room).emit('room-connected',currentRoom.sockets);
             console.log(colorize('Bağlantı sonlandırıldı -> ', "yellow") + user.id + colorize(' -> ', "yellow") + colorize(reason, "BgRed"));
         });
     } else {
