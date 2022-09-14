@@ -2,7 +2,7 @@
 
 ## Features
 
-- [Hearts of Iron IV Map](https://github.com/Ferhatduran55/jvectormap-world/blob/master/map.png?raw=true)
+- [Hearts of Iron IV Map(Cooming soon..)](https://github.com/Ferhatduran55/jvectormap-world/blob/master/map.png?raw=true)
 
 ## APIs
 ### Local APIs
