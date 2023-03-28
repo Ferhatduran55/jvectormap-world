@@ -113,4 +113,4 @@
 
 | Variable | Value |
 | - | - |
-| X_API_KEY | "bKDUjcnKWnEgwoICmjxrQsMNLsXbPQekrxiNSueQnBnFQUsQkn" |
+| X_API_KEY | "your_ayfie_api_key" |
