@@ -2,37 +2,10 @@ const express = require("express");
 const { createServer } = require("http");
 const { exit } = require("process");
 const { Server } = require("socket.io");
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const dotenv = require('dotenv').config();
-const isset = require('isset-php');
 const { Socket } = require("socket.io-client");
-const Colors = {
-    Reset: "\x1b[0m",
-    Bright: "\x1b[1m",
-    Dim: "\x1b[2m",
-    Underscore: "\x1b[4m",
-    Blink: "\x1b[5m",
-    Reverse: "\x1b[7m",
-    Hidden: "\x1b[8m",
+const Colors = require("./colors");
 
-    black: "\x1b[30m",
-    red: "\x1b[31m",
-    green: "\x1b[32m",
-    yellow: "\x1b[33m",
-    blue: "\x1b[34m",
-    magenta: "\x1b[35m",
-    cyan: "\x1b[36m",
-    white: "\x1b[37m",
-
-    BgBlack: "\x1b[40m",
-    BgRed: "\x1b[41m",
-    BgGreen: "\x1b[42m",
-    BgYellow: "\x1b[43m",
-    BgBlue: "\x1b[44m",
-    BgMagenta: "\x1b[45m",
-    BgCyan: "\x1b[46m",
-    BgWhite: "\x1b[47m",
-};
 function colorize(text = "", ...options) {
     let opts = "";
     options = options ?? "white";
@@ -42,28 +15,11 @@ function colorize(text = "", ...options) {
     return `${opts}${text}${Colors.Reset}`;
 }
 function getEnv(properties, isInt = false) {
-    var output;
-    var arr = Object.entries(process.env);
-    arr.forEach(element => {
-        if (Array.isArray(element)) {
-            let num = 0;
-            element.forEach(element2 => {
-                if (element2 == properties || num >= 1) {
-                    num += 1;
-                    if (num == 2) {
-                        if (isInt) {
-                            output = parseInt(element2);
-                            exit;
-                        } else {
-                            output = element2;
-                            exit;
-                        }
-                    }
-                }
-            });
-        }
-    });
-    return output;
+    const envValue = process.env[properties];
+    if (envValue !== undefined) {
+        return isInt ? parseInt(envValue) : envValue;
+    }
+    return null;
 }
 const env = {
     HOSTNAME: getEnv('HOSTNAME'),

@@ -2,27 +2,27 @@
   "name": "jvectormap-world",
   "version": "1.0.0",
   "description": "",
+  "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "test": "node app.js"
+    "start": "node app.js"
   },
   "keywords": [
     "jvectormap",
     "jvm",
-    "jquery",
-    "nodejs",
-    "php"
+    "worldmap",
+    "world",
+    "rest",
+    "restcountries"
   ],
   "author": "Ferhat Duran",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "isset-php": "^1.0.7",
     "jquery": "^3.6.0",
-    "pm2": "^5.2.0",
     "socket.io": "^4.5.1",
-    "socket.io-client": "^2.5.0",
-    "xmlhttprequest": "^1.8.0"
+    "socket.io-client": "^2.5.0"
   }
 }

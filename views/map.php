@@ -25,7 +25,7 @@ if (!isset($_SESSION['room']) && !isset($_GET['room'])) {
     </span>
 </span>
 <div id="map" class="map_cache"></div>
-<script src="js/jvectormap/setting.js"></script>
+<script src="assets/js/jvectormap/setting.js"></script>
 <script data-group="socketio" id="old" src></script>
 <script data-group="socketio" id="latest" src="node_modules/socket.io/client-dist/socket.io.js"></script>
 <script data-group="socketio">

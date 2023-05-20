@@ -20,16 +20,16 @@ function Space($number)
         <?php
         $vendor = [
             "bootstrap/dist/css/bootstrap.min.css",
-            "jvectormap/jvectormap.css",
-            "fontawesome/css/fontawesome.min.css",
-            "main/style.css",
-            "jvectormap/jvectormap.js",
+            "bootstrap/dist/js/bootstrap.bundle.min.js",
             "jquery/dist/jquery.min.js",
+            "jvectormap/jvectormap.css",
+            "jvectormap/jvectormap.js",
+            "fontawesome/css/fontawesome.min.css",
+            "fontawesome/js/fontawesome.min.js",
             "jvectormap/jvectormap.min.js",
             "jvectormap/maps/world_mill.js",
+            "main/style.css",
             "main.js",
-            "fontawesome/js/fontawesome.min.js",
-            "bootstrap/dist/js/bootstrap.bundle.min.js"
         ];
         foreach ($vendor as $key => $value) {
             $n = "";
@@ -41,8 +41,8 @@ function Space($number)
                         echo "$n<script src=\"vendor/$value\"></script>\n";
                     } elseif (file_exists("node_modules/$value")) {
                         echo "$n<script src=\"node_modules/$value\"></script>\n";
-                    } elseif (file_exists("js/$value")) {
-                        echo "$n<script src=\"js/$value\"></script>\n";
+                    } elseif (file_exists("assets/js/$value")) {
+                        echo "$n<script src=\"assets/js/$value\"></script>\n";
                     }
                     break;
                 case "css":
@@ -50,8 +50,8 @@ function Space($number)
                         echo "$n<link rel=\"stylesheet\" href=\"vendor/$value\">\n";
                     } elseif (file_exists("node_modules/$value")) {
                         echo "$n<link rel=\"stylesheet\" href=\"node_modules/$value\">\n";
-                    } elseif (file_exists("css/$value")) {
-                        echo "$n<link rel=\"stylesheet\" href=\"css/$value\">\n";
+                    } elseif (file_exists("assets/css/$value")) {
+                        echo "$n<link rel=\"stylesheet\" href=\"assets/css/$value\">\n";
                     }
                     break;
             }
